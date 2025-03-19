@@ -1,11 +1,22 @@
 import { Box, Container, Flex, useDisclosure } from "@chakra-ui/react";
-import React from "react";
+import { useQuery } from "@tanstack/react-query"
 import Sidenav from "./Sidenav";
 import TopNav from "./TopNav";
 import SideDrawer from "./SideDrawer";
+import { fetchExample } from "../api/query/exampleQuery";
 
 const DashboardLayout = ({ title, children }) => {
+
   const { isOpen, onClose, onOpen } = useDisclosure();
+  
+  const exampleQuery = useQuery({
+    queryKey: ["example"],
+    queryFn: fetchExample,
+  })
+
+  if(exampleQuery.isLoading) return <div>Loading...</div>
+
+  
 
   return (
     <Flex>
